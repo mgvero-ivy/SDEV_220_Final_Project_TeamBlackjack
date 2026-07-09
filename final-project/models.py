@@ -1,9 +1,9 @@
 # models.py
 
 class Tables:
-  def __init__(self, tablenum, seatsopen, seatsfull, image):
+  def __init__(self, tablenum, seats, seatsfull, image):
     self.tablenum = tablenum
-    self.seatsopen = seatsopen
+    self.seats = seats
     self.seatsfull = seatsfull
     self.image = image
 
