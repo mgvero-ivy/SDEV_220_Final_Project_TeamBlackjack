@@ -18,3 +18,7 @@ class User:
     self.password = password
 
 class Waitlist:
+  def __init__(self, playerid, tablewaitingfor, jointime):
+    self.playerid = playerid
+    self.tablewaitingfor = tablewaitingfor
+    self.jointime = jointime
