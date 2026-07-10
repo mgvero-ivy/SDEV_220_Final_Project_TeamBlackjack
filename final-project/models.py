@@ -15,3 +15,5 @@ class User:
     self.currenttable = currenttable
     self.activelyplaying =a ctivelyplaying
     self.password = password
+
+class Waitlist:
