@@ -1,7 +1,8 @@
 # models.py
 
-class Tables:
-  def __init__(self, tablenum, seats, seatsfull, open, image):
+class Table:
+  def __init__(self, ID, tablenum, seats, seatsfull, open, image):
+    self.ID = ID
     self.tablenum = tablenum
     self.seats = seats
     self.seatsfull = seatsfull
