@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Request Submitted</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+    <main class="join-form">
+        <h1>Request Submitted</h1>
+
+        <p><strong>Name:</strong> {{ player_name }}</p>
+        <p><strong>Phone:</strong> {{ phone_number }}</p>
+        <p><strong>Table:</strong> {{ table_name }}</p>
+
+        <a href="{{ url_for('index') }}">Return to tables</a>
+    </main>
+
+</body>
+</html>
