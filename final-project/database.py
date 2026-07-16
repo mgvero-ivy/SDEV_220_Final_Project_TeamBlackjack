@@ -30,3 +30,19 @@ def fill_table_from_waitlist(table, waitlist):
             break
 
     return seated_players
+def remove_player_from_table(table, player_email, players):
+    """
+    Removes a player from a table and updates the table seat count.
+    """
+
+    for player in players:
+        if player.email == player_email and player.currenttable == table.tablenum:
+            player.currenttable = None
+            player.activelyplaying = False
+
+            if table.seatsfull > 0:
+                table.seatsfull -= 1
+
+            return True
+
+    return False
