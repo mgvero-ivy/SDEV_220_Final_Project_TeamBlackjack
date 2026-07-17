@@ -9,8 +9,7 @@ class Table:
     self.image = image
 
 class User:
-  def __init__(self, email, name, number, currenttable, activelyplaying, password):
-    self.email = email
+  def __init__(self, name, number, currenttable, activelyplaying, password):
     self.name = name
     self.number = number
     self.currenttable = currenttable
