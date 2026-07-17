@@ -36,6 +36,30 @@ def join(table_name):
 
     return render_template("join.html", table_name=table_name)
 
+@app.route("/signup", methods=["GET", "POST"])
+def signup():
+
+
+@app.route("/login", methods=["GET", "POST"])
+def login():
+
+@app.route("/logout")
+def logout():
+    session.clear()
+    return redirect(url_for("index"))
+
+
+@app.route("/admin", methods=["GET", "POST"])
+def admin():
+
+
+@app.route("/admin/dashboard")
+def admin_dashboard():
+
+
+
+
+
 
 if __name__ == "__main__":
     app.run(debug=True)
