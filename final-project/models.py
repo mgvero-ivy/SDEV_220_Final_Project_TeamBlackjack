@@ -1,7 +1,7 @@
 # models.py
 
 class Table:
-  def __init__(self, tabl_enum, seats, seats_full, open):
+  def __init__(self, table_num, seats, seats_full, open):
     self.table_num = table_num #Number to identify the table
     self.seats = seats #Total numbers of seats
     self.seats_full = seats_full #Number of seats full
