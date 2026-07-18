@@ -38,8 +38,26 @@ def join(table_name):
 
 @app.route("/signup", methods=["GET", "POST"])
 def signup():
-    pass #temporarilly passing for testing
+    pass #Until finished with the rest of the project
+    """if request.method == "POST":
+        name = request.form.get("name", "").strip()
+        password = request.form.get("password", "").strip()
+        phone_number = request.form.get("phone_number", "").strip()
+        if not phone_number or not name or not password:
+            return render_template("signup.html", error="Name, password, and phone number required.")
+        conn = get_connection()
+        c = conn.cursor()
+        try:
+            c.execute("INSERT INTO users (name, password, phone_number) VALUES (?, ?, ?)", (email, password, phone_number))
+            conn.commit()
+            session["user"] = phone_number
+            return redirect(url_for("index"))
+        except:
+            return render_template("signup.html", error="Phone number already exists.")
+        finally:
+            conn.close()
 
+    return render_template("signup.html")"""
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
@@ -53,8 +71,15 @@ def logout():
 
 @app.route("/admin", methods=["GET", "POST"])
 def admin():
-    pass #temporarilly passing for testing
-
+    pass #Until finished with the rest of the project
+    """if request.method == "POST":
+        password = request.form.get("password")
+        if password == ADMIN_PASSWORD:
+            session["admin"] = True
+            return redirect(url_for("admin_dashboard"))
+        else:
+            return render_template("admin.html", error="Incorrect password.")
+    return render_template("admin.html")"""
 
 @app.route("/admin/dashboard")
 def admin_dashboard():
