@@ -38,10 +38,12 @@ def join(table_name):
 
 @app.route("/signup", methods=["GET", "POST"])
 def signup():
+    pass #temporarilly passing for testing
 
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
+    pass #temporarilly passing for testing
 
 @app.route("/logout")
 def logout():
@@ -51,10 +53,12 @@ def logout():
 
 @app.route("/admin", methods=["GET", "POST"])
 def admin():
+    pass #temporarilly passing for testing
 
 
 @app.route("/admin/dashboard")
 def admin_dashboard():
+    pass #temporarilly passing for testing
 
 
 
