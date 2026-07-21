@@ -61,7 +61,24 @@ def signup():
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
-    pass #temporarilly passing for testing
+    pass #Until finished with the rest of the project
+    """if request.method == "POST":
+        phone_number = request.form.get("phone_number", "").strip()
+        password = request.form.get("password", "").strip()
+
+        conn = get_connection()
+        c = conn.cursor()
+        c.execute("SELECT password FROM users WHERE phone_number = ?", (phone_number,))
+        row = c.fetchone()
+        conn.close()
+
+        if row and (row[0], password):
+            session["user"] = phone_number
+            return redirect(url_for("index"))
+        else:
+            return render_template("login.html", error="Invalid credentials.")
+
+    return render_template("login.html")"""
 
 @app.route("/logout")
 def logout():
