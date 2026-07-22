@@ -179,9 +179,79 @@ def admin_dashboard():
     return render_template("admin_dashboard.html", tables=tables)
 
 
+@app.route(
+    "/admin/remove-player/<int:table_id>/<int:player_index>",
+    methods=["POST"]
+)
+def remove_player(table_id, player_index):
+    # Only logged-in admins may remove players
+    if not session.get("admin"):
+        return redirect(url_for("admin"))
 
+    data = load_data()
 
+    # Find the table using its numeric ID
+    selected_table = None
 
+    for table in data["tables"]:
+        if table["id"] == table_id:
+            selected_table = table
+            break
+
+    if selected_table is None:
+        return "Table not found", 404
+
+    # Make sure the requested player position exists
+    if player_index < 0 or player_index >= len(selected_table["players"]):
+        return "Player not found", 404
+
+    # Remove the seated player
+    selected_table["players"].pop(player_index)
+
+    # Move the first waiting player into the open seat
+    if selected_table["waitlist"]:
+        next_player = selected_table["waitlist"].pop(0)
+        selected_table["players"].append(next_player)
+
+    save_data(data)
+
+    return redirect(url_for("admin_dashboard"))
+
+@app.route(
+    "/admin/remove-waiting-player/<int:table_id>/<int:player_index>",
+    methods=["POST"]
+)
+def remove_waiting_player(table_id, player_index):
+    # Only logged-in admins may remove waiting players
+    if not session.get("admin"):
+        return redirect(url_for("admin"))
+
+    data = load_data()
+
+    # Find the selected table
+    selected_table = None
+
+    for table in data["tables"]:
+        if table["id"] == table_id:
+            selected_table = table
+            break
+
+    if selected_table is None:
+        return "Table not found", 404
+
+    # Make sure the requested waiting player exists
+    if (
+        player_index < 0
+        or player_index >= len(selected_table["waitlist"])
+    ):
+        return "Waiting player not found", 404
+
+    # Remove the player from the waiting list
+    selected_table["waitlist"].pop(player_index)
+
+    save_data(data)
+
+    return redirect(url_for("admin_dashboard"))
 
 if __name__ == "__main__":
     app.run(debug=True)

@@ -24,7 +24,9 @@
         <tbody>
             {% for table in tables %}
             <tr>
-                <td>{{ table.stakes }} {{ table.game_type }}</td>
+                <td>
+                    {{ table.stakes }} {{ table.game_type }}
+                </td>
 
                 <td>
                     {{ table.players | length }}/{{ table.total_seats }}
@@ -32,6 +34,66 @@
 
                 <td>
                     {{ table.waitlist | length }}
+                </td>
+            </tr>
+
+            <tr>
+                <td colspan="3">
+                    <strong>Seated Players:</strong>
+
+                    {% if table.players %}
+                        <ul>
+                            {% for player in table.players %}
+                                <li>
+                                    {{ player.name }} —
+                                    {{ player.phone_number }}
+
+                                    <form
+                                        method="POST"
+                                        action="{{ url_for(
+                                            'remove_player',
+                                            table_id=table.id,
+                                            player_index=loop.index0
+                                        ) }}"
+                                        style="display: inline;"
+                                    >
+                                        <button type="submit">Remove</button>
+                                    </form>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    {% else %}
+                        <p>No players are currently seated.</p>
+                    {% endif %}
+
+                    <strong>Waiting List:</strong>
+
+                    {% if table.waitlist %}
+                        <ol>
+                            {% for player in table.waitlist %}
+                                <li>
+                                    {{ player.name }} —
+                                    {{ player.phone_number }}
+
+                                    <form
+                                        method="POST"
+                                        action="{{ url_for(
+                                            'remove_waiting_player',
+                                            table_id=table.id,
+                                            player_index=loop.index0
+                                        ) }}"
+                                        style="display: inline;"
+                                    >
+                                        <button type="submit">
+                                            Remove from Waitlist
+                                        </button>
+                                    </form>
+                                </li>
+                            {% endfor %}
+                        </ol>
+                    {% else %}
+                        <p>No players are currently waiting.</p>
+                    {% endif %}
                 </td>
             </tr>
             {% endfor %}

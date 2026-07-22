@@ -19,14 +19,6 @@
                     "phone_number": "123"
                 },
                 {
-                    "name": "person4",
-                    "phone_number": "123"
-                },
-                {
-                    "name": "person5",
-                    "phone_number": "123"
-                },
-                {
                     "name": "person6",
                     "phone_number": "123"
                 },
@@ -41,9 +33,7 @@
                 {
                     "name": "person9",
                     "phone_number": "123"
-                }
-            ],
-            "waitlist": [
+                },
                 {
                     "name": "person10",
                     "phone_number": "123"
@@ -51,6 +41,16 @@
                 {
                     "name": "person11",
                     "phone_number": "123"
+                }
+            ],
+            "waitlist": [
+                {
+                    "name": "john smith",
+                    "phone_number": "555"
+                },
+                {
+                    "name": "Steve",
+                    "phone_number": "123-456-7890"
                 }
             ]
         },
@@ -75,8 +75,42 @@
             "game_type": "PLO",
             "stakes": "1/2",
             "total_seats": 6,
-            "players": [],
-            "waitlist": []
+            "players": [
+                {
+                    "name": "a",
+                    "phone_number": "123"
+                },
+                {
+                    "name": "bbb",
+                    "phone_number": "3233"
+                },
+                {
+                    "name": "ccc",
+                    "phone_number": "1232"
+                },
+                {
+                    "name": "ddd",
+                    "phone_number": "737373"
+                },
+                {
+                    "name": "eeee",
+                    "phone_number": "432"
+                },
+                {
+                    "name": "FFFF",
+                    "phone_number": "3294"
+                }
+            ],
+            "waitlist": [
+                {
+                    "name": "JJJJJ",
+                    "phone_number": "21834"
+                },
+                {
+                    "name": "KKKK",
+                    "phone_number": "8472"
+                }
+            ]
         },
         {
             "id": 5,
