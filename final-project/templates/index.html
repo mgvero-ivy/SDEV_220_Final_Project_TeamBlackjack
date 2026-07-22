@@ -13,7 +13,9 @@
 <body>
 
     <header>
-        <a href="#" class="admin-login">Admin Login</a>
+        <a href="{{ url_for('admin') }}" class="admin-login">
+    Admin Login
+</a>
     </header>
 
     <main class="table-grid">
@@ -23,9 +25,10 @@
                                         THIS AREA IS SUBJECT TO CHANGE PLEASE LET EVERYONE ON
                                         THE TEAM KNOW IF THERE ARE ANY CHANGES MADE TO THIS
                                         AREA OF index.html-->
-            <a href="{{ url_for('join', table_name=table.name) }}" class="poker-table">
-                <span>{{ table.name }}</span>
-                <span>{{ table.seats }} Seats</span>
+            <a class="poker-table" href="{{ url_for('join', table_name=table.stakes ~ ' ' ~ table.game_type) }}">
+
+                <span>{{ table.stakes }} {{ table.game_type }}</span>
+                <span>{{ table.seats_filled }}/{{ table.total_seats }} Seats</span>
                 <span>{{ table.waiting }} Waiting</span>
             </a>
         {% endfor %}

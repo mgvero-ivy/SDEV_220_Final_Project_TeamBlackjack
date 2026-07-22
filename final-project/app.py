@@ -5,20 +5,65 @@ app = Flask(__name__)
 # Required for storing login information in the Flask session
 app.secret_key = "team-blackjack-development-key"
 
+# Temporary admin password for local development
+ADMIN_PASSWORD = "admin"
+
+# Temporary table data used by both the main page and admin dashboard
+# This will later be replaced with data loaded from a file
+tables = [
+    {
+        "id": 1,
+        "game_type": "NL Holdem",
+        "stakes": "1/3",
+        "seats_filled": 7,
+        "total_seats": 9,
+        "waiting": 0
+    },
+    {
+        "id": 2,
+        "game_type": "NL Holdem",
+        "stakes": "2/5",
+        "seats_filled": 9,
+        "total_seats": 9,
+        "waiting": 3
+    },
+    {
+        "id": 3,
+        "game_type": "NL Holdem",
+        "stakes": "5/10",
+        "seats_filled": 9,
+        "total_seats": 9,
+        "waiting": 1
+    },
+    {
+        "id": 4,
+        "game_type": "PLO",
+        "stakes": "1/2",
+        "seats_filled": 6,
+        "total_seats": 6,
+        "waiting": 4
+    },
+    {
+        "id": 5,
+        "game_type": "PLO",
+        "stakes": "2/5",
+        "seats_filled": 4,
+        "total_seats": 6,
+        "waiting": 0
+    },
+    {
+        "id": 6,
+        "game_type": "LIMIT Holdem",
+        "stakes": "1/3",
+        "seats_filled": 4,
+        "total_seats": 9,
+        "waiting": 0
+    }
+]
+
 #Displays the main page with all currently available tables
 @app.route("/") 
 def index():
-
-    #TO DO this list is temporary and will need to be build with table objects
-    tables = [
-        {"name": "1/3 NL Holdem", "seats": "7/9", "waiting": 0},
-        {"name": "2/5 NL Holdem", "seats": "9/9", "waiting": 3},
-        {"name": "5/10 NL Holdem", "seats": "9/9", "waiting": 1},
-        {"name": "1/2 PLO", "seats": "6/6", "waiting": 4},
-        {"name": "2/5 PLO", "seats": "4/6", "waiting": 0},
-        {"name": "1/3 LIMIT Holdem", "seats": "4/9", "waiting": 0}
-    ]
-
     return render_template("index.html", tables=tables)
 
 #this shows the player sigh-up page for the chosen table
@@ -91,7 +136,22 @@ def logout():
 
 @app.route("/admin", methods=["GET", "POST"])
 def admin():
-    pass #Until finished with the rest of the project
+    if request.method == "POST":
+        # Get the password entered in the form
+        password = request.form.get("password", "")
+
+        if password == ADMIN_PASSWORD:
+            # Remember that the admin successfully logged in
+            session["admin"] = True
+            return redirect(url_for("admin_dashboard"))
+
+        # Reload the page with an error message
+        return render_template(
+            "admin.html",
+            error="Incorrect password."
+        )
+
+    return render_template("admin.html")
     """if request.method == "POST":
         password = request.form.get("password")
         if password == ADMIN_PASSWORD:
@@ -103,7 +163,11 @@ def admin():
 
 @app.route("/admin/dashboard")
 def admin_dashboard():
-    pass #temporarilly passing for testing
+    # Prevent users from opening the dashboard without logging in
+    if not session.get("admin"):
+        return redirect(url_for("admin"))
+
+    return render_template("admin_dashboard.html", tables=tables)
 
 
 

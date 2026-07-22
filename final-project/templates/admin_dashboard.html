@@ -1,1 +1,48 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+</head>
+<body>
+
+    <h1>Admin Dashboard</h1>
+
+    <h2>Current Poker Tables</h2>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Game and Stakes</th>
+                <th>Seats Filled</th>
+                <th>Waiting List</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for table in tables %}
+            <tr>
+                <td>{{ table.stakes }} {{ table.game_type }}</td>
+
+                <td>{{ table.seats_filled }}/{{ table.total_seats }}</td>
+
+                <td>{{ table.waiting }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <p>Admin login was successful.</p>
+
+    <p>
+        <a href="{{ url_for('index') }}">View Tables</a>
+    </p>
+
+    <p>
+        <a href="{{ url_for('logout') }}">Log Out</a>
+    </p>
+
+</body>
+</html>
