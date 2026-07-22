@@ -1,5 +1,9 @@
 from flask import Flask, render_template, request, session, redirect, url_for
 from database import load_data, save_data
+from models import User, Table, Waitlist
+
+
+
 
 app = Flask(__name__)
 
@@ -11,17 +15,20 @@ ADMIN_PASSWORD = "admin"
 
 def find_table(data, table_name):
     """
-    Finds a table by combining its stakes and game type.
-    Returns the matching table dictionary or None.
+    Finds a table by its stakes and game type.
+    Returns the table dictionary and its list position.
     """
 
-    for table in data["tables"]:
-        current_name = f"{table['stakes']} {table['game_type']}"
+    for index, table_data in enumerate(data["tables"]):
+        current_name = (
+            f"{table_data['stakes']} "
+            f"{table_data['game_type']}"
+        )
 
         if current_name == table_name:
-            return table
+            return table_data, index
 
-    return None
+    return None, None
 
 
 #Displays the main page with all currently available tables
@@ -41,10 +48,13 @@ def join(table_name):
     data = load_data()
 
     # Find the table selected by the player
-    selected_table = find_table(data, table_name)
+    selected_table_data, table_index = find_table(data, table_name)
 
-    if selected_table is None:
+    if selected_table_data is None:
         return "Table not found", 404
+
+    # Convert the saved dictionary into a Table object
+    selected_table = Table.from_dict(selected_table_data)
 
     if request.method == "POST":
         player_name = request.form.get("player_name", "").strip()
@@ -58,22 +68,25 @@ def join(table_name):
                 error="Name and phone number are required."
             )
 
-        player = {
-            "name": player_name,
-            "phone_number": phone_number
-        }
+        # Create the player as a User object
+        player = User(name=player_name, phone_number=phone_number)
+
+        # Convert it to a dictionary before saving it in data.txt
+        player_data = player.to_dict()
 
         # Seat the player if the table has an open seat
-        if len(selected_table["players"]) < selected_table["total_seats"]:
-            selected_table["players"].append(player)
-            status = "seated"
+        # Let the Table object decide where the player belongs
+        status = selected_table.add_player(player_data)
+
+        if status == "waitlisted":
+            waitlist_position = len(selected_table.waitlist)
+        else:
             waitlist_position = None
 
-        # Otherwise, add the player to the waiting list
-        else:
-            selected_table["waitlist"].append(player)
-            status = "waitlisted"
-            waitlist_position = len(selected_table["waitlist"])
+        # Replace the original dictionary with the updated table data
+        data["tables"][table_index] = selected_table.to_dict()
+
+        save_data(data)
 
         # Save the updated table data to data.txt
         save_data(data)
@@ -239,15 +252,18 @@ def remove_waiting_player(table_id, player_index):
     if selected_table is None:
         return "Table not found", 404
 
+    # Convert the saved list into a Waitlist object
+    waitlist = Waitlist(selected_table["waitlist"])
+
     # Make sure the requested waiting player exists
-    if (
-        player_index < 0
-        or player_index >= len(selected_table["waitlist"])
-    ):
+    if player_index < 0 or player_index >= len(waitlist):
         return "Waiting player not found", 404
 
-    # Remove the player from the waiting list
-    selected_table["waitlist"].pop(player_index)
+    # Remove the selected player using the Waitlist class
+    waitlist.remove_player(player_index)
+
+    # Convert it back to a regular list before saving
+    selected_table["waitlist"] = waitlist.to_list()
 
     save_data(data)
 

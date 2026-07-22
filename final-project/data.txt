@@ -49,8 +49,12 @@
                     "phone_number": "555"
                 },
                 {
-                    "name": "Steve",
-                    "phone_number": "123-456-7890"
+                    "name": "Test Person 2",
+                    "phone_number": "58282883"
+                },
+                {
+                    "name": "Class Test",
+                    "phone_number": "54235235"
                 }
             ]
         },
@@ -59,7 +63,12 @@
             "game_type": "NL Holdem",
             "stakes": "2/5",
             "total_seats": 9,
-            "players": [],
+            "players": [
+                {
+                    "name": "Test Case 1",
+                    "phone_number": "123"
+                }
+            ],
             "waitlist": []
         },
         {
@@ -109,6 +118,10 @@
                 {
                     "name": "KKKK",
                     "phone_number": "8472"
+                },
+                {
+                    "name": "Class Test PLO",
+                    "phone_number": "52358235"
                 }
             ]
         },
@@ -125,7 +138,12 @@
             "game_type": "LIMIT Holdem",
             "stakes": "1/3",
             "total_seats": 9,
-            "players": [],
+            "players": [
+                {
+                    "name": "Old man",
+                    "phone_number": "532591835"
+                }
+            ],
             "waitlist": []
         }
     ]
