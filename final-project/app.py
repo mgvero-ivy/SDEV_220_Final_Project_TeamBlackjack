@@ -1,6 +1,9 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, session, redirect, url_for
 
 app = Flask(__name__)
+
+# Required for storing login information in the Flask session
+app.secret_key = "team-blackjack-development-key"
 
 #Displays the main page with all currently available tables
 @app.route("/") 
