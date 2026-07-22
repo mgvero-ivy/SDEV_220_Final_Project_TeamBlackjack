@@ -18,6 +18,23 @@
         <p><strong>Phone:</strong> {{ phone_number }}</p>
         <p><strong>Table:</strong> {{ table_name }}</p>
 
+        {% if status == "seated" %}
+        <p>
+            {{ player_name }}, you have been seated at the
+            {{ table_name }} table.
+        </p>
+
+        {% elif status == "waitlisted" %}
+        <p>
+            {{ player_name }}, the {{ table_name }} table is full.
+            You have been added to the waiting list.
+        </p>
+
+        <p>
+            Your waiting-list position is {{ waitlist_position }}.
+        </p>
+        {% endif %}
+
         <a href="{{ url_for('index') }}">Return to tables</a>
     </main>
 

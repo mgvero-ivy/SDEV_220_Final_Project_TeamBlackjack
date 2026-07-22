@@ -28,8 +28,10 @@
             <a class="poker-table" href="{{ url_for('join', table_name=table.stakes ~ ' ' ~ table.game_type) }}">
 
                 <span>{{ table.stakes }} {{ table.game_type }}</span>
-                <span>{{ table.seats_filled }}/{{ table.total_seats }} Seats</span>
-                <span>{{ table.waiting }} Waiting</span>
+                
+                <span>{{ table.players | length }}/{{ table.total_seats }} Seats</span>
+
+                <span>{{ table.waitlist | length }} Waiting</span>
             </a>
         {% endfor %}
 

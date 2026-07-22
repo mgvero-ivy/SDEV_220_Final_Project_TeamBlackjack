@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request, session, redirect, url_for
+from database import load_data, save_data
 
 app = Flask(__name__)
 
@@ -8,78 +9,82 @@ app.secret_key = "team-blackjack-development-key"
 # Temporary admin password for local development
 ADMIN_PASSWORD = "admin"
 
-# Temporary table data used by both the main page and admin dashboard
-# This will later be replaced with data loaded from a file
-tables = [
-    {
-        "id": 1,
-        "game_type": "NL Holdem",
-        "stakes": "1/3",
-        "seats_filled": 7,
-        "total_seats": 9,
-        "waiting": 0
-    },
-    {
-        "id": 2,
-        "game_type": "NL Holdem",
-        "stakes": "2/5",
-        "seats_filled": 9,
-        "total_seats": 9,
-        "waiting": 3
-    },
-    {
-        "id": 3,
-        "game_type": "NL Holdem",
-        "stakes": "5/10",
-        "seats_filled": 9,
-        "total_seats": 9,
-        "waiting": 1
-    },
-    {
-        "id": 4,
-        "game_type": "PLO",
-        "stakes": "1/2",
-        "seats_filled": 6,
-        "total_seats": 6,
-        "waiting": 4
-    },
-    {
-        "id": 5,
-        "game_type": "PLO",
-        "stakes": "2/5",
-        "seats_filled": 4,
-        "total_seats": 6,
-        "waiting": 0
-    },
-    {
-        "id": 6,
-        "game_type": "LIMIT Holdem",
-        "stakes": "1/3",
-        "seats_filled": 4,
-        "total_seats": 9,
-        "waiting": 0
-    }
-]
+def find_table(data, table_name):
+    """
+    Finds a table by combining its stakes and game type.
+    Returns the matching table dictionary or None.
+    """
+
+    for table in data["tables"]:
+        current_name = f"{table['stakes']} {table['game_type']}"
+
+        if current_name == table_name:
+            return table
+
+    return None
+
 
 #Displays the main page with all currently available tables
-@app.route("/") 
+# Displays the main page with all currently available tables
+@app.route("/")
 def index():
+    # Load the latest table data from data.txt
+    data = load_data()
+    tables = data["tables"]
+
     return render_template("index.html", tables=tables)
 
-#this shows the player sigh-up page for the chosen table
+# Displays the player signup page for the chosen table
 @app.route("/join/<path:table_name>", methods=["GET", "POST"])
 def join(table_name):
+    # Load the latest saved data
+    data = load_data()
+
+    # Find the table selected by the player
+    selected_table = find_table(data, table_name)
+
+    if selected_table is None:
+        return "Table not found", 404
+
     if request.method == "POST":
-        player_name = request.form["player_name"]
-        phone_number = request.form["phone_number"]
+        player_name = request.form.get("player_name", "").strip()
+        phone_number = request.form.get("phone_number", "").strip()
 
+        # Make sure both fields were completed
+        if not player_name or not phone_number:
+            return render_template(
+                "join.html",
+                table_name=table_name,
+                error="Name and phone number are required."
+            )
 
-        #TO DO Save player info, check if selected table has open seat, set table_name to the table number/ID 
+        player = {
+            "name": player_name,
+            "phone_number": phone_number
+        }
+
+        # Seat the player if the table has an open seat
+        if len(selected_table["players"]) < selected_table["total_seats"]:
+            selected_table["players"].append(player)
+            status = "seated"
+            waitlist_position = None
+
+        # Otherwise, add the player to the waiting list
+        else:
+            selected_table["waitlist"].append(player)
+            status = "waitlisted"
+            waitlist_position = len(selected_table["waitlist"])
+
+        # Save the updated table data to data.txt
+        save_data(data)
+
         return render_template(
             "confirmation.html",
             table_name=table_name,
             player_name=player_name,
-            phone_number=phone_number
+            phone_number=phone_number,
+            status=status,
+            waitlist_position=waitlist_position
         )
 
     return render_template("join.html", table_name=table_name)
@@ -166,6 +171,10 @@ def admin_dashboard():
     # Prevent users from opening the dashboard without logging in
     if not session.get("admin"):
         return redirect(url_for("admin"))
+
+    # Load the latest table data from data.txt
+    data = load_data()
+    tables = data["tables"]
 
     return render_template("admin_dashboard.html", tables=tables)
 

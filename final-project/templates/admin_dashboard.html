@@ -26,9 +26,13 @@
             <tr>
                 <td>{{ table.stakes }} {{ table.game_type }}</td>
 
-                <td>{{ table.seats_filled }}/{{ table.total_seats }}</td>
+                <td>
+                    {{ table.players | length }}/{{ table.total_seats }}
+                </td>
 
-                <td>{{ table.waiting }}</td>
+                <td>
+                    {{ table.waitlist | length }}
+                </td>
             </tr>
             {% endfor %}
         </tbody>
