@@ -102,6 +102,10 @@ def join(table_name):
 
     return render_template("join.html", table_name=table_name)
 
+@app.route("/logout")
+def logout():
+    session.clear()
+    return redirect(url_for("index"))
 
 @app.route("/admin", methods=["GET", "POST"])
 def admin():
