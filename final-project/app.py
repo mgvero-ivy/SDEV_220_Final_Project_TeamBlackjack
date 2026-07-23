@@ -102,55 +102,6 @@ def join(table_name):
 
     return render_template("join.html", table_name=table_name)
 
-@app.route("/signup", methods=["GET", "POST"])
-def signup():
-    pass #Until finished with the rest of the project
-    """if request.method == "POST":
-        name = request.form.get("name", "").strip()
-        password = request.form.get("password", "").strip()
-        phone_number = request.form.get("phone_number", "").strip()
-        if not phone_number or not name or not password:
-            return render_template("signup.html", error="Name, password, and phone number required.")
-        conn = get_connection()
-        c = conn.cursor()
-        try:
-            c.execute("INSERT INTO users (name, password, phone_number) VALUES (?, ?, ?)", (email, password, phone_number))
-            conn.commit()
-            session["user"] = phone_number
-            return redirect(url_for("index"))
-        except:
-            return render_template("signup.html", error="Phone number already exists.")
-        finally:
-            conn.close()
-
-    return render_template("signup.html")"""
-
-@app.route("/login", methods=["GET", "POST"])
-def login():
-    pass #Until finished with the rest of the project
-    """if request.method == "POST":
-        phone_number = request.form.get("phone_number", "").strip()
-        password = request.form.get("password", "").strip()
-
-        conn = get_connection()
-        c = conn.cursor()
-        c.execute("SELECT password FROM users WHERE phone_number = ?", (phone_number,))
-        row = c.fetchone()
-        conn.close()
-
-        if row and (row[0], password):
-            session["user"] = phone_number
-            return redirect(url_for("index"))
-        else:
-            return render_template("login.html", error="Invalid credentials.")
-
-    return render_template("login.html")"""
-
-@app.route("/logout")
-def logout():
-    session.clear()
-    return redirect(url_for("index"))
-
 
 @app.route("/admin", methods=["GET", "POST"])
 def admin():
@@ -170,14 +121,6 @@ def admin():
         )
 
     return render_template("admin.html")
-    """if request.method == "POST":
-        password = request.form.get("password")
-        if password == ADMIN_PASSWORD:
-            session["admin"] = True
-            return redirect(url_for("admin_dashboard"))
-        else:
-            return render_template("admin.html", error="Incorrect password.")
-    return render_template("admin.html")"""
 
 @app.route("/admin/dashboard")
 def admin_dashboard():
