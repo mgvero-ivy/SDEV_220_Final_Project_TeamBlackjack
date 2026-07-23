@@ -5,70 +5,15 @@
             "game_type": "NL Holdem",
             "stakes": "1/3",
             "total_seats": 9,
-            "players": [
-                {
-                    "name": "person1",
-                    "phone_number": "123"
-                },
-                {
-                    "name": "person2",
-                    "phone_number": "123"
-                },
-                {
-                    "name": "person3",
-                    "phone_number": "123"
-                },
-                {
-                    "name": "person6",
-                    "phone_number": "123"
-                },
-                {
-                    "name": "person7",
-                    "phone_number": "123"
-                },
-                {
-                    "name": "person8",
-                    "phone_number": "123"
-                },
-                {
-                    "name": "person9",
-                    "phone_number": "123"
-                },
-                {
-                    "name": "person10",
-                    "phone_number": "123"
-                },
-                {
-                    "name": "person11",
-                    "phone_number": "123"
-                }
-            ],
-            "waitlist": [
-                {
-                    "name": "john smith",
-                    "phone_number": "555"
-                },
-                {
-                    "name": "Test Person 2",
-                    "phone_number": "58282883"
-                },
-                {
-                    "name": "Class Test",
-                    "phone_number": "54235235"
-                }
-            ]
+            "players": [],
+            "waitlist": []
         },
         {
             "id": 2,
             "game_type": "NL Holdem",
             "stakes": "2/5",
             "total_seats": 9,
-            "players": [
-                {
-                    "name": "Test Case 1",
-                    "phone_number": "123"
-                }
-            ],
+            "players": [],
             "waitlist": []
         },
         {
@@ -84,46 +29,8 @@
             "game_type": "PLO",
             "stakes": "1/2",
             "total_seats": 6,
-            "players": [
-                {
-                    "name": "a",
-                    "phone_number": "123"
-                },
-                {
-                    "name": "bbb",
-                    "phone_number": "3233"
-                },
-                {
-                    "name": "ccc",
-                    "phone_number": "1232"
-                },
-                {
-                    "name": "ddd",
-                    "phone_number": "737373"
-                },
-                {
-                    "name": "eeee",
-                    "phone_number": "432"
-                },
-                {
-                    "name": "FFFF",
-                    "phone_number": "3294"
-                }
-            ],
-            "waitlist": [
-                {
-                    "name": "JJJJJ",
-                    "phone_number": "21834"
-                },
-                {
-                    "name": "KKKK",
-                    "phone_number": "8472"
-                },
-                {
-                    "name": "Class Test PLO",
-                    "phone_number": "52358235"
-                }
-            ]
+            "players": [],
+            "waitlist": []
         },
         {
             "id": 5,
@@ -138,12 +45,7 @@
             "game_type": "LIMIT Holdem",
             "stakes": "1/3",
             "total_seats": 9,
-            "players": [
-                {
-                    "name": "Old man",
-                    "phone_number": "532591835"
-                }
-            ],
+            "players": [],
             "waitlist": []
         }
     ]

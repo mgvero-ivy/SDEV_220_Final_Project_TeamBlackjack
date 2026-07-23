@@ -18,7 +18,7 @@ def load_data():
 
     except FileNotFoundError:
         # Return an empty structure if the file does not exist
-        return {"tables": []}
+        return {"tables": []} 
 
     except json.JSONDecodeError:
         # Return an empty structure if the JSON is invalid
