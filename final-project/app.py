@@ -66,27 +66,34 @@ def join(table_name):
             return render_template(
                 "join.html",
                 table_name=table_name,
-                error="Name and phone number are required."
-            )
-
-                # Phone number must contain exactly 10 digits
-        if not re.fullmatch(r"\d{10}", phone_number):
-            return render_template(
-                "join.html",
-                table_name=table_name,
-                error="Phone number must contain exactly 10 digits.",
+                error="Name and phone number are required.",
                 player_name=player_name,
                 phone_number=phone_number
             )
 
-        # Create the player as a User object
-        player = User(name=player_name, phone_number=phone_number)
+        # Accept either 10 digits or the format 123-456-7890
+        if not re.fullmatch(r"(?:\d{10}|\d{3}-\d{3}-\d{4})", phone_number):
+            return render_template(
+                "join.html",
+                table_name=table_name,
+                error=("Phone number must contain 10 digits"),
+                player_name=player_name,
+                phone_number=phone_number
+            )
 
-        # Convert it to a dictionary before saving it in data.txt
+        # Remove dashes before storing the phone number
+        phone_number = phone_number.replace("-", "")
+
+        # Create the player as a User object
+        player = User(
+            name=player_name,
+            phone_number=phone_number
+        )
+
+        # Convert the player into a dictionary for data.txt
         player_data = player.to_dict()
 
-        # Seat the player if the table has an open seat
-        # Let the Table object decide where the player belongs
+        # Seat the player or place them on the waiting list
         status = selected_table.add_player(player_data)
 
         if status == "waitlisted":
@@ -94,12 +101,10 @@ def join(table_name):
         else:
             waitlist_position = None
 
-        # Replace the original dictionary with the updated table data
+        # Replace the old table dictionary with the updated table
         data["tables"][table_index] = selected_table.to_dict()
 
-        save_data(data)
-
-        # Save the updated table data to data.txt
+        # Save the updated information once
         save_data(data)
 
         return render_template(
@@ -111,7 +116,12 @@ def join(table_name):
             waitlist_position=waitlist_position
         )
 
-    return render_template("join.html", table_name=table_name)
+    return render_template(
+        "join.html",
+        table_name=table_name,
+        player_name="",
+        phone_number=""
+    )
 
 @app.route("/logout")
 def logout():
