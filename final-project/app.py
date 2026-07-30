@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, session, redirect, url_for
 from database import load_data, save_data
 from models import User, Table, Waitlist
+import re
 
 
 
@@ -66,6 +67,16 @@ def join(table_name):
                 "join.html",
                 table_name=table_name,
                 error="Name and phone number are required."
+            )
+
+                # Phone number must contain exactly 10 digits
+        if not re.fullmatch(r"\d{10}", phone_number):
+            return render_template(
+                "join.html",
+                table_name=table_name,
+                error="Phone number must contain exactly 10 digits.",
+                player_name=player_name,
+                phone_number=phone_number
             )
 
         # Create the player as a User object
