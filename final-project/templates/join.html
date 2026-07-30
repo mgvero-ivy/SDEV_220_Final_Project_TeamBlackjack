@@ -22,7 +22,7 @@
             <input type="text" id="player-name" name="player_name" required>
 
             <label for="phone-number">Phone Number</label>
-            <input type="tel" id="phone-number" name="phone_number" required>
+            <input type="tel" id="phone-number" name="phone_number" required pattern="^\+?[0-9\s\-\(\)]{10,20}$" minlength="10" maxlength="15">
 
             <button type="submit">Submit</button>
         </form>
