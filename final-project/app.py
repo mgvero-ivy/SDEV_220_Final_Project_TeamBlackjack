@@ -76,7 +76,7 @@ def join(table_name):
             return render_template(
                 "join.html",
                 table_name=table_name,
-                error=("Phone number must contain 10 digits"),
+                error=("Phone number must contain 10 digits, no characters other than numerical digits and '-' symbols "),
                 player_name=player_name,
                 phone_number=phone_number
             )
