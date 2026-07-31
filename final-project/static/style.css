@@ -25,7 +25,7 @@ header {
     background-repeat: no-repeat;
     background-color: transparent;
 
-    color: #c4c71fe8;
+    color: #d4c21c;
     font-size: 1.5rem;
     font-stretch: condensed;
     font-weight: bold;
@@ -64,9 +64,10 @@ header {
     justify-content: center;
     align-items: center;
 
-    color: white;
-    font-size: 1.25rem;
+    color: #e2e46ae8;
+    font-size: 1.4rem;
     font-weight: bold;
+    font-stretch: semi-condensed;
     text-align: center;
     text-shadow: 2px 2px 4px black;
 
