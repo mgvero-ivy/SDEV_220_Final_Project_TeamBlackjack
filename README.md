@@ -4,7 +4,6 @@
 #          Zachary A. Klopp
 #          Evan J. Watt
 
-# Test File
 
 ## Run the application
 
