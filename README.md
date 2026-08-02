@@ -1,3 +1,8 @@
+#Authors:  Marko Gvero
+#          Nichole Bannerman
+#          Zachary A. Klopp
+#          Evan J. Watt
+
 # Test File
 
 ## Run the application
